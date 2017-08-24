@@ -1,4 +1,4 @@
-#include "my_printf.h"
+#include "mini_snprintf.h"
 #include <string.h>
 #include <stdarg.h>
 
@@ -10,6 +10,6 @@ static inline size_t __puts(char* buf, size_t bufsize, char* str, size_t strlen)
     return strlen;
 }
 
-int my_snprintf(char* buf, size_t size, const char* fmt, ...) {
+int mini_snprintf(char* buf, size_t size, const char* fmt, ...) {
     return 0;
 }

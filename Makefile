@@ -1,4 +1,4 @@
-C_FILES := test.c my_printf.c
+C_FILES := $(wildcard *.c)
 OBJECTS := $(C_FILES:.cxx=.o)
 
 C_FLAGS := -std=c11 -Wall -O2
