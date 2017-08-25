@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#define my_printf       snprintf
+#define my_printf       mini_snprintf
 
 #define DEFINE_TC_PRELUDE(_name, _n, fmt, _expected)        \
 int testcase_##_name(void) {                                \
@@ -37,6 +37,11 @@ int testcase_##_name(void) {                                \
     int len = my_printf(real, n, fmt, arg0, arg1);          \
     DEFINE_TC_PROLOG(_name, _n, fmt, _expected)
 
+#define DEFINE_TC3(_name, _n, fmt, arg0, arg1, arg2, _expected)  \
+    DEFINE_TC_PRELUDE(_name, _n, fmt, _expected)           \
+    int len = my_printf(real, n, fmt, arg0, arg1, arg2);   \
+    DEFINE_TC_PROLOG(_name, _n, fmt, _expected)
+
 #define STRINGIFY(x) #x
 
 #define RUN_TC(name)  do {                                  \
@@ -51,6 +56,8 @@ DEFINE_TC0(plain, 128, "Hello World",
            "Hello World")
 DEFINE_TC1(string, 128, "This string is %s", "Hello Kitty",
            "This string is Hello Kitty")
+DEFINE_TC3(math, 128, "%d + %d = %d!", 1, 2, (1+2),
+           "1 + 2 = 3!")
 DEFINE_TC2(int, 128, "int: min = %d, max = %d", INT_MIN, INT_MAX,
            "int: min = -2147483648, max = 2147483647")
 DEFINE_TC2(uint, 128, "unsigned int: min = %u, max = %u", 0U, UINT_MAX,
@@ -69,6 +76,7 @@ DEFINE_TC0(malformed, 128, "Unknown specifier %q",
 int main() {
     RUN_TC(plain);
     RUN_TC(string);
+    RUN_TC(math);
     RUN_TC(int);
     RUN_TC(uint);
     RUN_TC(long);
